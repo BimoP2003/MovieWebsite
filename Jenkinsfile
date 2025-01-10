@@ -11,18 +11,20 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Create ZIP') {
             steps {
                 script {
-                    echo "Installing dependencies..."
-                }
-            }
-        }
+                    def timestamp = new Date().format("yyyy-MM-dd_HH-mm-ss")
 
-        stage('Run Application') {
-            steps {
-                script {
-                    echo "Running the application..."
+                    def downloadsPath = "C:/Users/userpro/Downloads"  
+
+                    def zipFileName = "${downloadsPath}/MovieWebsite_${timestamp}.zip"
+
+                    echo "Creating ZIP file: ${zipFileName}"
+
+                    bat """
+                    powershell Compress-Archive -Path * -DestinationPath ${zipFileName}
+                    """
                 }
             }
         }

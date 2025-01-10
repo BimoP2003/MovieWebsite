@@ -1,28 +1,42 @@
 pipeline {
-    
     agent any
-    
+
     stages {
-        
-        stage("build") {
-            
+        stage('Clone Repository') {
             steps {
-                echo 'building the application....'
+                script {
+                    echo "Cloning repository..."
+                    git branch: 'main', url: 'https://github.com/BimoP2003/MovieWebsite.git'
+                }
             }
         }
-        
-        stage("test") {
-            
+
+        stage('Install Dependencies') {
             steps {
-                echo 'testing the application....'
+                script {
+                    echo "Installing dependencies..."
+                }
             }
         }
-        
-        stage("deploy") {
-            
+
+        stage('Run Application') {
             steps {
-                echo 'deploying the application....'
+                script {
+                    echo "Running the application..."
+                }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        always {
+            echo 'Pipeline completed!'
+        }
+        failure {
+            echo 'Pipeline failed.'
         }
     }
 }
